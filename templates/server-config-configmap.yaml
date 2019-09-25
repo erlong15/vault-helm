@@ -5,12 +5,11 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ template "vault.fullname" . }}-config
-  namespace: {{ .Release.Namespace }}
   labels:
-    helm.sh/chart: {{ include "vault.chart" . }}
-    app.kubernetes.io/name: {{ include "vault.name" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app: {{ template "vault.name" . }}
+    chart: {{ template "vault.chart" . }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
 data:
   extraconfig-from-values.hcl: |-
   {{- if eq .mode "standalone" }}
